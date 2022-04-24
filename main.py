@@ -1,26 +1,38 @@
-import gmsh
+import os
+import shutil
+import sys
 import streamlit as st
-import trimesh
-
-@st.cache
-def convert_cad(geometry):
-    mesh = trimesh.Trimesh(**trimesh.interfaces.gmsh.load_gmsh(file_name=geometry, gmsh_args=[
-        ("Mesh.Algorithm", 1),  # Different algorithm types, check them out
-        ("Mesh.CharacteristicLengthFromCurvature", 50),  # Tuning the smoothness, + smothness = + time
-        ("General.NumThreads", 10),  # Multithreading capability
-        ("Mesh.MinimumCirclePoints", 32)]))
-    return mesh
 
 # Add sidebar to the app
-st.sidebar.markdown("### My first Awesome App")
-st.sidebar.markdown("Welcome to my first awesome app. This app is built using Streamlit and uses data source from redfin housing market data. I hope you enjoy!")
+st.sidebar.markdown("### Cad to Stl Converter")
+st.sidebar.markdown("Welcome to my first awesome app. This app is built using Streamlit and converts cad files into an stl format. I hope you enjoy!")
 
 # Add title and subtitle to the main interface of the app
 st.title("CAD to STL converter")
-st.markdown('### By Marco Sanguineti')
+st.markdown('### By Marco Sanguineti - GitMarco27')
 
-data = st.file_uploader("Upload your cad files", type={"iges", "igs"})
-# new_data = convert_cad(data)
-# if data is not None:
-#     st.download_button('Download Geometry', data=data.read())
+data = st.file_uploader("Upload your cad files", type={"iges", "igs"}, accept_multiple_files=True)
+
+if not os.path.exists('tempDir'):
+    os.mkdir('tempDir')
+for file in os.listdir('tempDir'):
+    os.remove(os.path.join('tempDir', file))
+if os.path.exists('archive.zip'):
+    os.remove('archive.zip')
+
+if len(data) > 0:
+    for cad in data:
+        source = os.path.join("tempDir", cad.name)
+        dest = os.path.join("tempDir", os.path.splitext(cad.name)[0]+'.stl')
+        with open(os.path.join("tempDir", cad.name), "wb") as f:
+            f.write(cad.getbuffer())
+
+        os.system(f'{sys.executable} cad_converter.py {source} {dest}')
+
+    st.markdown('Your .stl files are ready!')
+
+    shutil.make_archive('archive', 'zip', 'tempDir')
+
+    with open('archive.zip', 'rb') as f:
+        st.download_button('Download', f, file_name='archive.zip')
 
