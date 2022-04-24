@@ -1,3 +1,6 @@
-libgl1-mesa-glx
-libgl1
-
+libglu1-mesa-glx
+libglu1
+libglu1-mesa
+libxi-dev
+libxmu-dev
+libglu1-mesa-dev
