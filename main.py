@@ -1,6 +1,6 @@
+import gmsh
 import streamlit as st
 import trimesh
-
 
 @st.cache
 def convert_cad(geometry):
@@ -20,5 +20,7 @@ st.title("CAD to STL converter")
 st.markdown('### By Marco Sanguineti')
 
 data = st.file_uploader("Upload your cad files", type={"iges", "igs"})
-new_data = convert_cad(data)
-st.write(data)
+# new_data = convert_cad(data)
+# if data is not None:
+#     st.download_button('Download Geometry', data=data.read())
+

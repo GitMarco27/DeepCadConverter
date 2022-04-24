@@ -1,2 +1,2 @@
 trimesh
-gmsh
+gmsh-sdk
