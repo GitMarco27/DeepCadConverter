@@ -1,4 +1,3 @@
-libglu1-mesa-glx
 libglu1
 libglu1-mesa
 libxi-dev
