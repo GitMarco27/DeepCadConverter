@@ -3,3 +3,4 @@ libglu1-mesa
 libxi-dev
 libxmu-dev
 libglu1-mesa-dev
+libxrender1
