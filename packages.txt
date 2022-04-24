@@ -4,4 +4,4 @@ libxi-dev
 libxmu-dev
 libglu1-mesa-dev
 libxrender1
-libXcursor
+libxcursor1
