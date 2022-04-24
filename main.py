@@ -3,8 +3,6 @@ import shutil
 import sys
 import streamlit as st
 
-os.system('apt-get update && apt-get install libgl1')
-
 # Add sidebar to the app
 st.sidebar.markdown("### Cad to Stl Converter")
 st.sidebar.markdown("Welcome to my first awesome app. This app is built using Streamlit and converts cad files into an stl format. I hope you enjoy!")
