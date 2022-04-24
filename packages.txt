@@ -5,3 +5,4 @@ libxmu-dev
 libglu1-mesa-dev
 libxrender1
 libxcursor1
+libxft2
