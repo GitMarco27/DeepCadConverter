@@ -51,6 +51,8 @@ if st.button('Convert your files'):
         os.remove('archive.zip')
 
     if len(data) > 0:
+        completed = 0
+        failed = 0
         with st.expander("Logs"):
             for cad in data:
                 source = os.path.join("tempDir", cad.name)
@@ -62,11 +64,19 @@ if st.button('Convert your files'):
                 os.system(f'{sys.executable} cad_converter.py {source} {dest} '
                           f'{args[0]} {args[1]} {args[2]} {args[3]}')
                 if os.path.exists(dest):
-                    st.write(f'{os.path.basename(dest)}: completed')
+                    st.markdown(f'**{os.path.basename(dest)}**: completed')
+                    completed += 1
                 else:
-                    st.write(f'{os.path.basename(dest)}: error detected')
+                    st.markdown(f'**{os.path.basename(dest)}**: error detected')
+                    failed += 1
 
-        st.markdown('Your .stl files are ready! (Check logs for errors)')
+        st.markdown(f"""
+Your .stl files are ready!
+        
+ - Completed: {completed}
+ - Failed: {failed}
+        
+Check logs for more informations""")
 
         shutil.make_archive('archive', 'zip', 'tempDir')
 
