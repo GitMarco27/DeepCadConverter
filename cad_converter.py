@@ -2,15 +2,15 @@ import sys
 import trimesh
 
 
-def convert_cad(source, dest):
+def convert_cad(source, dest, args):
     # General info found on https://trimsh.org/trimesh.interfaces.gmsh.html Returns a surface mesh from CAD model in
     # Open Cascade Breap (.brep), Step (.stp or .step) and Iges formats Or returns a surface mesh from 3D volume mesh
     # using gmsh. For a list of possible options to pass to GMSH, check: http://gmsh.info/doc/texinfo/gmsh.html
     mesh = trimesh.Trimesh(**trimesh.interfaces.gmsh.load_gmsh(file_name=source, gmsh_args=[
-        ("Mesh.Algorithm", 1),  # Different algorithm types, check them out
-        ("Mesh.CharacteristicLengthFromCurvature", 50),  # Tuning the smoothness, + smothness = + time
-        ("General.NumThreads", 10),  # Multithreading capability
-        ("Mesh.MinimumCirclePoints", 32)]))
+        ("Mesh.Algorithm", int(args[0])),  # Different algorithm types, check them out
+        ("Mesh.CharacteristicLengthFromCurvature", int(args[1])),  # Tuning the smoothness, + smothness = + time
+        ("General.NumThreads", int(args[2])),  # Multithreading capability
+        ("Mesh.MinimumCirclePoints", int(args[3]))]))
 
     # scene = mesh.scene()
 
@@ -28,6 +28,6 @@ def convert_cad(source, dest):
 
 
 if __name__ == "__main__":
-    convert_cad(sys.argv[1], sys.argv[2])
+    convert_cad(sys.argv[1], sys.argv[2], args=sys.argv[3:])
 
 
