@@ -33,8 +33,10 @@ with st.expander("Settings"):
     car_length = st.text_input(label='CharacteristicLengthFromCurvature', value='50')
     num_threads = st.text_input(label='NumThreads', value='10')
     min_circle_points = st.text_input(label='MinimumCirclePoints', value='32')
+    min_element = st.text_input(label='MeshSizeMin', value='0.0')
+    max_element = st.text_input(label='MeshSizeMax', value='1e+22')
 
-    args = [algo, car_length, num_threads, min_circle_points]
+    args = [algo, car_length, num_threads, min_circle_points, min_element, max_element]
 
 # Loading data
 data = st.file_uploader("Upload your cad files", type={"iges", "igs", "step", "stp"}, accept_multiple_files=True)
@@ -62,7 +64,7 @@ if st.button('Convert your files'):
 
                 st.write(f'Working on {os.path.basename(source)}...')
                 os.system(f'{sys.executable} cad_converter.py {source} {dest} '
-                          f'{args[0]} {args[1]} {args[2]} {args[3]}')
+                          f'{args[0]} {args[1]} {args[2]} {args[3]} {args[4]} {args[5]}')
                 if os.path.exists(dest):
                     st.markdown(f'**{os.path.basename(dest)}**: completed')
                     completed += 1
